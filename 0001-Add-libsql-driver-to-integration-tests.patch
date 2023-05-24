@@ -1,0 +1,114 @@
+From f6c245ec0a89ec45f6f2a660d9a3038a7bc540a9 Mon Sep 17 00:00:00 2001
+From: Piotr Jastrzebski <piotr@chiselstrike.com>
+Date: Sat, 20 May 2023 21:32:22 +0200
+Subject: [PATCH] Add libsql driver to integration tests
+
+Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
+---
+ internal/integration/go.mod         | 8 +++++++-
+ internal/integration/go.sum         | 4 ++++
+ internal/integration/sqlite_test.go | 1 +
+ 3 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/internal/integration/go.mod b/internal/integration/go.mod
+index 17cd83e8..7105e909 100644
+--- a/internal/integration/go.mod
++++ b/internal/integration/go.mod
+@@ -12,6 +12,7 @@ require (
+ 	github.com/go-sql-driver/mysql v1.7.0
+ 	github.com/hashicorp/hcl/v2 v2.13.0
+ 	github.com/lib/pq v1.10.7
++	github.com/libsql/libsql-client-go v0.0.0-20230516123308-049b954a6bbd
+ 	github.com/mattn/go-sqlite3 v1.14.16
+ 	github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e
+ 	github.com/rogpeppe/go-internal v1.9.0
+@@ -57,6 +58,7 @@ require (
+ 	github.com/fatih/color v1.14.1 // indirect
+ 	github.com/fsnotify/fsnotify v1.6.0 // indirect
+ 	github.com/getsentry/raven-go v0.2.0 // indirect
++	github.com/gin-gonic/gin v1.7.7 // indirect
+ 	github.com/go-openapi/inflect v0.19.0 // indirect
+ 	github.com/gogo/protobuf v1.3.2 // indirect
+ 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+@@ -66,6 +68,7 @@ require (
+ 	github.com/google/wire v0.5.0 // indirect
+ 	github.com/googleapis/enterprise-certificate-proxy v0.2.1 // indirect
+ 	github.com/googleapis/gax-go/v2 v2.7.0 // indirect
++	github.com/gorilla/websocket v1.5.0 // indirect
+ 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
+ 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+ 	github.com/jmespath/go-jmespath v0.4.0 // indirect
+@@ -73,13 +76,14 @@ require (
+ 	github.com/kr/pretty v0.3.1 // indirect
+ 	github.com/kr/text v0.2.0 // indirect
+ 	github.com/kylelemons/godebug v1.1.0 // indirect
+-	github.com/libsql/libsql-client-go v0.0.0-20230516123308-049b954a6bbd // indirect
++	github.com/libsql/sqlite-antlr4-parser v0.0.0-20230512205400-b2348f0d1196 // indirect
+ 	github.com/manifoldco/promptui v0.9.0 // indirect
+ 	github.com/mattn/go-colorable v0.1.13 // indirect
+ 	github.com/mattn/go-isatty v0.0.18 // indirect
+ 	github.com/mattn/go-runewidth v0.0.14 // indirect
+ 	github.com/mitchellh/go-homedir v1.1.0 // indirect
+ 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
++	github.com/modern-go/reflect2 v1.0.2 // indirect
+ 	github.com/olekukonko/tablewriter v0.0.5 // indirect
+ 	github.com/pingcap/errors v0.11.5-0.20210425183316-da1aaba5fb63 // indirect
+ 	github.com/pingcap/log v0.0.0-20210625125904-98ed8e2eb1c7 // indirect
+@@ -98,6 +102,7 @@ require (
+ 	go.uber.org/multierr v1.8.0 // indirect
+ 	go.uber.org/zap v1.21.0 // indirect
+ 	gocloud.dev v0.27.0 // indirect
++	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
+ 	golang.org/x/exp v0.0.0-20230519143937-03e91628a987 // indirect
+ 	golang.org/x/mod v0.10.0 // indirect
+ 	golang.org/x/net v0.9.0 // indirect
+@@ -115,4 +120,5 @@ require (
+ 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+ 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
+ 	gopkg.in/yaml.v3 v3.0.1 // indirect
++	nhooyr.io/websocket v1.8.7 // indirect
+ )
+diff --git a/internal/integration/go.sum b/internal/integration/go.sum
+index 213fb6fc..d7715250 100644
+--- a/internal/integration/go.sum
++++ b/internal/integration/go.sum
+@@ -859,6 +859,8 @@ github.com/gorilla/websocket v0.0.0-20170926233335-4201258b820c/go.mod h1:E7qHFY
+ github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
+ github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+ github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
++github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
++github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+ github.com/grafana/regexp v0.0.0-20220304095617-2e8d9baf4ac2/go.mod h1:M5qHK+eWfAv8VR/265dIuEpL3fNfeC21tXXp9itM24A=
+ github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7/go.mod h1:FecbI9+v66THATjSRHfNgh1IVFe/9kFxbXtjV0ctIMA=
+ github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=
+@@ -1078,6 +1080,7 @@ github.com/libsql/libsql-client-go v0.0.0-20230509162402-7a5cb68aa169 h1:XxZN51Y
+ github.com/libsql/libsql-client-go v0.0.0-20230516123308-049b954a6bbd h1:bipR5gsToh2OqaJY14kgXAroQQ/j1KNWidZjWFY3nw8=
+ github.com/libsql/libsql-client-go v0.0.0-20230516123308-049b954a6bbd/go.mod h1:XaIcfeMOJ1w1L/TELMmzOXkAGZKRYF/QSWTqgwOT4R8=
+ github.com/libsql/sqlite-antlr4-parser v0.0.0-20230512205400-b2348f0d1196 h1:XBs+xh9/OM9kMvK7W9a3SEReC5x26z22cbYn0K6cUW4=
++github.com/libsql/sqlite-antlr4-parser v0.0.0-20230512205400-b2348f0d1196/go.mod h1:20nXSmcf0nAscrzqsXeC2/tA3KkV2eCiJqYuyAgl+ss=
+ github.com/lightstep/lightstep-tracer-common/golang/gogo v0.0.0-20190605223551-bc2310a04743/go.mod h1:qklhhLq1aX+mtWk9cPHPzaBjWImj5ULL6C7HFJtXQMM=
+ github.com/lightstep/lightstep-tracer-go v0.18.1/go.mod h1:jlF1pusYV4pidLvZ+XD0UBX0ZE6WURAspgAczcDHrL4=
+ github.com/linode/linodego v1.4.0/go.mod h1:PVsRxSlOiJyvG4/scTszpmZDTdgS+to3X6eS8pRrWI8=
+@@ -2479,6 +2482,7 @@ k8s.io/utils v0.0.0-20211116205334-6203023598ed/go.mod h1:jPW/WVKK9YHAvNhRxK0md/
+ k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9/go.mod h1:jPW/WVKK9YHAvNhRxK0md/EJ228hCsBRufyofKtW8HA=
+ nhooyr.io/websocket v1.8.6/go.mod h1:B70DZP8IakI65RVQ51MsWP/8jndNma26DVA/nFSCgW0=
+ nhooyr.io/websocket v1.8.7 h1:usjR2uOr/zjjkVMy0lW+PPohFok7PCow5sDjLgX4P4g=
++nhooyr.io/websocket v1.8.7/go.mod h1:B70DZP8IakI65RVQ51MsWP/8jndNma26DVA/nFSCgW0=
+ rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
+ rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
+ rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
+index b222666b..ced1d976 100644
+--- a/internal/integration/sqlite_test.go
++++ b/internal/integration/sqlite_test.go
+@@ -20,6 +20,7 @@ import (
+ 	"ariga.io/atlas/sql/schema"
+ 	"ariga.io/atlas/sql/sqlite"
+ 
++	_ "github.com/libsql/libsql-client-go/libsql"
+ 	_ "github.com/mattn/go-sqlite3"
+ 	"github.com/stretchr/testify/require"
+ )
+-- 
+2.39.2
+

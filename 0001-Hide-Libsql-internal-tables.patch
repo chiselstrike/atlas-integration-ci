@@ -1,0 +1,28 @@
+From 0c6f84839c6fabe02eaa87f0a85f680382f08e69 Mon Sep 17 00:00:00 2001
+From: Piotr Jastrzebski <piotr@chiselstrike.com>
+Date: Sat, 20 May 2023 15:28:41 +0200
+Subject: [PATCH] Hide Libsql internal tables
+
+Remove this after Libsql supports hidding the tables themselves.
+
+Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
+---
+ sql/sqlite/inspect.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sql/sqlite/inspect.go b/sql/sqlite/inspect.go
+index 788d46eb..00870d87 100644
+--- a/sql/sqlite/inspect.go
++++ b/sql/sqlite/inspect.go
+@@ -715,7 +715,7 @@ const (
+ 	databasesQuery     = "SELECT `name`, `file` FROM pragma_database_list() WHERE `name` <> 'temp'"
+ 	databasesQueryArgs = "SELECT `name`, `file` FROM pragma_database_list() WHERE `name` IN (%s)"
+ 	// Query to list database tables.
+-	tablesQuery = "SELECT `name`, `sql` FROM sqlite_master WHERE `type` = 'table' AND `name` NOT LIKE 'sqlite_%' AND `name` NOT LIKE 'libsql_%'"
++	tablesQuery = "SELECT `name`, `sql` FROM sqlite_master WHERE `type` = 'table' AND `name` NOT LIKE 'sqlite_%' AND `name` NOT LIKE 'libsql_%' AND `name` NOT LIKE '_litestream_%'"
+ 	// Query to list table information.
+ 	columnsQuery = "SELECT `name`, `type`, (not `notnull`) AS `nullable`, `dflt_value`, (`pk` <> 0) AS `pk`, `hidden` FROM pragma_table_xinfo('%s') ORDER BY `cid`"
+ 	// Query to list table indexes.
+-- 
+2.39.2
+

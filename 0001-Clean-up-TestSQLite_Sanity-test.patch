@@ -1,0 +1,419 @@
+From 59fbf3e24bcab8e8377076c1adada8cd2c0a68a9 Mon Sep 17 00:00:00 2001
+From: Piotr Jastrzebski <piotr@chiselstrike.com>
+Date: Sat, 20 May 2023 14:59:32 +0200
+Subject: [PATCH] Clean up TestSQLite_Sanity test
+
+Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
+---
+ internal/integration/sqlite_test.go | 360 ++++++++++++++--------------
+ 1 file changed, 181 insertions(+), 179 deletions(-)
+
+diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
+index ced1d976..bae21d48 100644
+--- a/internal/integration/sqlite_test.go
++++ b/internal/integration/sqlite_test.go
+@@ -548,8 +548,9 @@ table "users" {
+ }
+ 
+ func TestSQLite_Sanity(t *testing.T) {
+-	n := "atlas_types_sanity"
+-	ddl := `
++	t.Run("Sanity", func(t *testing.T) {
++		n := "atlas_types_sanity"
++		ddl := `
+ create table atlas_types_sanity
+ (
+     "tInteger"            integer(10)                     default 100                                   null,
+@@ -581,211 +582,212 @@ create table atlas_types_sanity
+     "tDatetime"           datetime                        default 'now()'                           not null 
+ );
+ `
+-	liteRun(t, func(t *liteTest) {
+-		t.dropTables(n)
+-		_, err := t.db.Exec(ddl)
+-		require.NoError(t, err)
+-		realm := t.loadRealm()
+-		require.Len(t, realm.Schemas, 1)
+-		ts, ok := realm.Schemas[0].Table(n)
+-		require.True(t, ok)
+-		expected := schema.Table{
+-			Name:   n,
+-			Schema: realm.Schemas[0],
+-			Attrs:  ts.Attrs,
+-			Columns: []*schema.Column{
+-				{
+-					Name: "tInteger",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "integer", Unsigned: false}, Raw: "integer(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++		liteRun(t, func(t *liteTest) {
++			t.dropTables(n)
++			_, err := t.db.Exec(ddl)
++			require.NoError(t, err)
++			realm := t.loadRealm()
++			require.Len(t, realm.Schemas, 1)
++			ts, ok := realm.Schemas[0].Table(n)
++			require.True(t, ok)
++			expected := schema.Table{
++				Name:   n,
++				Schema: realm.Schemas[0],
++				Attrs:  ts.Attrs,
++				Columns: []*schema.Column{
++					{
++						Name: "tInteger",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "integer", Unsigned: false}, Raw: "integer(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tInt",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "int", Unsigned: false}, Raw: "int(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tInt",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "int", Unsigned: false}, Raw: "int(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tTinyIny",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "tinyint", Unsigned: false}, Raw: "tinyint(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tTinyIny",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "tinyint", Unsigned: false}, Raw: "tinyint(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tSmallInt",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "smallint", Unsigned: false}, Raw: "smallint(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tSmallInt",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "smallint", Unsigned: false}, Raw: "smallint(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tMediumInt",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "mediumint", Unsigned: false}, Raw: "mediumint(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tMediumInt",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "mediumint", Unsigned: false}, Raw: "mediumint(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tIntegerBigInt",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "bigint", Unsigned: false}, Raw: "bigint(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tIntegerBigInt",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "bigint", Unsigned: false}, Raw: "bigint(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tUnsignedBigInt",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "unsigned big int", Unsigned: false}, Raw: "unsigned big int(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tUnsignedBigInt",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "unsigned big int", Unsigned: false}, Raw: "unsigned big int(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tInt2",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "int2", Unsigned: false}, Raw: "int2(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tInt2",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "int2", Unsigned: false}, Raw: "int2(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tInt8",
+-					Type: &schema.ColumnType{Type: &schema.IntegerType{T: "int8", Unsigned: false}, Raw: "int8(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tInt8",
++						Type: &schema.ColumnType{Type: &schema.IntegerType{T: "int8", Unsigned: false}, Raw: "int8(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tReal",
+-					Type: &schema.ColumnType{Type: &schema.FloatType{T: "real", Precision: 0}, Raw: "real(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tReal",
++						Type: &schema.ColumnType{Type: &schema.FloatType{T: "real", Precision: 0}, Raw: "real(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tDouble",
+-					Type: &schema.ColumnType{Type: &schema.FloatType{T: "double", Precision: 0}, Raw: "double(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tDouble",
++						Type: &schema.ColumnType{Type: &schema.FloatType{T: "double", Precision: 0}, Raw: "double(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tDoublePrecision",
+-					Type: &schema.ColumnType{Type: &schema.FloatType{T: "double precision", Precision: 0}, Raw: "double precision(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tDoublePrecision",
++						Type: &schema.ColumnType{Type: &schema.FloatType{T: "double precision", Precision: 0}, Raw: "double precision(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tFloat",
+-					Type: &schema.ColumnType{Type: &schema.FloatType{T: "float", Precision: 0}, Raw: "float(10)", Null: true},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tFloat",
++						Type: &schema.ColumnType{Type: &schema.FloatType{T: "float", Precision: 0}, Raw: "float(10)", Null: true},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tText",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "text", Size: 10}, Raw: "text(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tText",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "text", Size: 10}, Raw: "text(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tCharacter",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "character", Size: 10}, Raw: "character(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tCharacter",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "character", Size: 10}, Raw: "character(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tVarchar",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "varchar", Size: 10}, Raw: "varchar(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tVarchar",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "varchar", Size: 10}, Raw: "varchar(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tVaryingCharacter",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "varying character", Size: 10}, Raw: "varying character(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tVaryingCharacter",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "varying character", Size: 10}, Raw: "varying character(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tNchar",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "nchar", Size: 10}, Raw: "nchar(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tNchar",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "nchar", Size: 10}, Raw: "nchar(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tNativeCharacter",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "native character", Size: 10}, Raw: "native character(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tNativeCharacter",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "native character", Size: 10}, Raw: "native character(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tNVarChar",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "nvarchar", Size: 10}, Raw: "nvarchar(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tNVarChar",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "nvarchar", Size: 10}, Raw: "nvarchar(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tClob",
+-					Type: &schema.ColumnType{Type: &schema.StringType{T: "clob", Size: 10}, Raw: "clob(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'I am Text'",
++					{
++						Name: "tClob",
++						Type: &schema.ColumnType{Type: &schema.StringType{T: "clob", Size: 10}, Raw: "clob(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'I am Text'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tBlob",
+-					Type: &schema.ColumnType{Type: &schema.BinaryType{T: "blob"}, Raw: "blob(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "'A'",
++					{
++						Name: "tBlob",
++						Type: &schema.ColumnType{Type: &schema.BinaryType{T: "blob"}, Raw: "blob(10)", Null: false},
++						Default: &schema.Literal{
++							V: "'A'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tNumeric",
+-					Type: &schema.ColumnType{Type: &schema.DecimalType{T: "numeric", Precision: 10}, Raw: "numeric(10)", Null: false},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tNumeric",
++						Type: &schema.ColumnType{Type: &schema.DecimalType{T: "numeric", Precision: 10}, Raw: "numeric(10)", Null: false},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tDecimal",
+-					Type: &schema.ColumnType{Type: &schema.DecimalType{T: "decimal", Precision: 10, Scale: 5}, Raw: "decimal(10,5)", Null: false},
+-					Default: &schema.Literal{
+-						V: "100",
++					{
++						Name: "tDecimal",
++						Type: &schema.ColumnType{Type: &schema.DecimalType{T: "decimal", Precision: 10, Scale: 5}, Raw: "decimal(10,5)", Null: false},
++						Default: &schema.Literal{
++							V: "100",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tBoolean",
+-					Type: &schema.ColumnType{Type: &schema.BoolType{T: "boolean"}, Raw: "boolean", Null: false},
+-					Default: &schema.Literal{
+-						V: "false",
++					{
++						Name: "tBoolean",
++						Type: &schema.ColumnType{Type: &schema.BoolType{T: "boolean"}, Raw: "boolean", Null: false},
++						Default: &schema.Literal{
++							V: "false",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tDate",
+-					Type: &schema.ColumnType{Type: &schema.TimeType{T: "date"}, Raw: "date", Null: false},
+-					Default: &schema.Literal{
+-						V: "'now()'",
++					{
++						Name: "tDate",
++						Type: &schema.ColumnType{Type: &schema.TimeType{T: "date"}, Raw: "date", Null: false},
++						Default: &schema.Literal{
++							V: "'now()'",
++						},
+ 					},
+-				},
+-				{
+-					Name: "tDatetime",
+-					Type: &schema.ColumnType{Type: &schema.TimeType{T: "datetime"}, Raw: "datetime", Null: false},
+-					Default: &schema.Literal{
+-						V: "'now()'",
++					{
++						Name: "tDatetime",
++						Type: &schema.ColumnType{Type: &schema.TimeType{T: "datetime"}, Raw: "datetime", Null: false},
++						Default: &schema.Literal{
++							V: "'now()'",
++						},
+ 					},
+ 				},
+-			},
+-		}
+-		require.EqualValues(t, &expected, ts)
++			}
++			require.EqualValues(t, &expected, ts)
++		})
+ 	})
+ 
+ 	t.Run("ImplicitIndexes", func(t *testing.T) {
+-- 
+2.39.2
+
