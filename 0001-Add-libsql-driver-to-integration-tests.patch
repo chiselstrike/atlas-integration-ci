@@ -1,0 +1,25 @@
+From 7d444016c4f63a1185839501b8ac9160d8db013a Mon Sep 17 00:00:00 2001
+From: Piotr Jastrzebski <piotr@chiselstrike.com>
+Date: Sun, 4 Jun 2023 21:12:49 +0200
+Subject: [PATCH] Add libsql driver to integration tests
+
+Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
+---
+ internal/integration/sqlite_test.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
+index b222666b..ced1d976 100644
+--- a/internal/integration/sqlite_test.go
++++ b/internal/integration/sqlite_test.go
+@@ -20,6 +20,7 @@ import (
+ 	"ariga.io/atlas/sql/schema"
+ 	"ariga.io/atlas/sql/sqlite"
+ 
++	_ "github.com/libsql/libsql-client-go/libsql"
+ 	_ "github.com/mattn/go-sqlite3"
+ 	"github.com/stretchr/testify/require"
+ )
+-- 
+2.39.2
+

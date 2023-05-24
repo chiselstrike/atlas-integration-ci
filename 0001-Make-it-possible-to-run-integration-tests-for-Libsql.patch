@@ -1,0 +1,48 @@
+From f1595a31aa8d0b3d1c04d19e53e73acf6e0bffdc Mon Sep 17 00:00:00 2001
+From: Piotr Jastrzebski <piotr@chiselstrike.com>
+Date: Sat, 20 May 2023 15:22:47 +0200
+Subject: [PATCH] Make it possible to run integration tests for Libsql
+
+Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
+---
+ internal/integration/sqlite_test.go | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
+index bae21d48..28737269 100644
+--- a/internal/integration/sqlite_test.go
++++ b/internal/integration/sqlite_test.go
+@@ -35,8 +35,17 @@ type liteTest struct {
+ 
+ func liteRun(t *testing.T, fn func(test *liteTest)) {
+ 	t.Parallel()
+-	f := path.Join(t.TempDir(), strings.ReplaceAll(t.Name(), "/", "_"))
+-	db, err := sql.Open("sqlite3", fmt.Sprintf("file:%s?cache=shared&_fk=1", f))
++	libsqlUrl := os.Getenv("LIBSQL_URL")
++	var f string
++	var db *sql.DB
++	var err error
++	if libsqlUrl == "" {
++		f = path.Join("/private", t.TempDir(), strings.ReplaceAll(t.Name(), "/", "_"))
++		db, err = sql.Open("sqlite3", fmt.Sprintf("file:%s?cache=shared&_fk=1", f))
++	} else {
++		f = "/data/iku.db/data"
++		db, err = sql.Open("libsql", libsqlUrl)
++	}
+ 	require.NoError(t, err)
+ 	t.Cleanup(func() {
+ 		require.NoError(t, db.Close())
+@@ -937,6 +946,10 @@ func (t *liteTest) dropTables(names ...string) {
+ }
+ 
+ func (t *liteTest) url(_ string) string {
++	libsqlUrl := os.Getenv("LIBSQL_URL")
++	if libsqlUrl != "" {
++		return libsqlUrl
++	}
+ 	return fmt.Sprintf("sqlite://file:%s?cache=shared&_fk=1", t.file)
+ }
+ 
+-- 
+2.39.2
+
