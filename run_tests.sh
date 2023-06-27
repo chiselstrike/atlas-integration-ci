@@ -4,7 +4,7 @@
 
 rm -rf atlas || exit 2
 
-git clone --no-tags --single-branch --branch libsql https://github.com/haaawk/atlas.git || exit 3
+git clone --no-tags --single-branch --branch master https://github.com/ariga/atlas.git || exit 3
 
 cd atlas
 

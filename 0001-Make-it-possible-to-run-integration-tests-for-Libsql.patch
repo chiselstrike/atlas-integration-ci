@@ -1,4 +1,4 @@
-From f1595a31aa8d0b3d1c04d19e53e73acf6e0bffdc Mon Sep 17 00:00:00 2001
+From c26e9e1001eadd585c516f4caa99b91e92249669 Mon Sep 17 00:00:00 2001
 From: Piotr Jastrzebski <piotr@chiselstrike.com>
 Date: Sat, 20 May 2023 15:22:47 +0200
 Subject: [PATCH] Make it possible to run integration tests for Libsql

@@ -1,4 +1,4 @@
-From 59fbf3e24bcab8e8377076c1adada8cd2c0a68a9 Mon Sep 17 00:00:00 2001
+From 4bdaafe5b1753c20b7a9e8376631e96e03e8afd3 Mon Sep 17 00:00:00 2001
 From: Piotr Jastrzebski <piotr@chiselstrike.com>
 Date: Sat, 20 May 2023 14:59:32 +0200
 Subject: [PATCH] Clean up TestSQLite_Sanity test
