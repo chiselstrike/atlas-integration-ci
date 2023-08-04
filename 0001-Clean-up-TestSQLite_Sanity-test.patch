@@ -1,4 +1,4 @@
-From 4bdaafe5b1753c20b7a9e8376631e96e03e8afd3 Mon Sep 17 00:00:00 2001
+From 2fcffd719495de62e9a35930882a91ba1c953ea0 Mon Sep 17 00:00:00 2001
 From: Piotr Jastrzebski <piotr@chiselstrike.com>
 Date: Sat, 20 May 2023 14:59:32 +0200
 Subject: [PATCH] Clean up TestSQLite_Sanity test
@@ -9,7 +9,7 @@ Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
  1 file changed, 181 insertions(+), 179 deletions(-)
 
 diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
-index ced1d976..bae21d48 100644
+index c18517f3..1e233096 100644
 --- a/internal/integration/sqlite_test.go
 +++ b/internal/integration/sqlite_test.go
 @@ -548,8 +548,9 @@ table "users" {

@@ -1,4 +1,4 @@
-From c7441984cc5a7624dae8ad057ae0f6a7770707df Mon Sep 17 00:00:00 2001
+From 0ad7f414c8b1add299968286bcfa241bc10c37ea Mon Sep 17 00:00:00 2001
 From: Piotr Jastrzebski <piotr@chiselstrike.com>
 Date: Sat, 20 May 2023 15:28:41 +0200
 Subject: [PATCH] Hide Libsql internal tables
@@ -11,10 +11,10 @@ Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/sql/sqlite/inspect.go b/sql/sqlite/inspect.go
-index 650ebacb..757f3c74 100644
+index e4467556..6cc8b236 100644
 --- a/sql/sqlite/inspect.go
 +++ b/sql/sqlite/inspect.go
-@@ -737,6 +737,7 @@ WHERE
+@@ -745,6 +745,7 @@ WHERE
  	sqlite_master.type = 'table'
  	AND sqlite_master.name NOT LIKE 'sqlite_%'
  	AND sqlite_master.name NOT LIKE 'libsql_%'

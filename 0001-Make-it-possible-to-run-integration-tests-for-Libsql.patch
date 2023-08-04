@@ -1,4 +1,4 @@
-From c26e9e1001eadd585c516f4caa99b91e92249669 Mon Sep 17 00:00:00 2001
+From f0757f5f64508471b451f3c337ad7a7ef8707366 Mon Sep 17 00:00:00 2001
 From: Piotr Jastrzebski <piotr@chiselstrike.com>
 Date: Sat, 20 May 2023 15:22:47 +0200
 Subject: [PATCH] Make it possible to run integration tests for Libsql
@@ -9,7 +9,7 @@ Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
  1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
-index bae21d48..28737269 100644
+index 1e233096..c50ac382 100644
 --- a/internal/integration/sqlite_test.go
 +++ b/internal/integration/sqlite_test.go
 @@ -35,8 +35,17 @@ type liteTest struct {
@@ -32,7 +32,7 @@ index bae21d48..28737269 100644
  	require.NoError(t, err)
  	t.Cleanup(func() {
  		require.NoError(t, db.Close())
-@@ -937,6 +946,10 @@ func (t *liteTest) dropTables(names ...string) {
+@@ -938,6 +947,10 @@ func (t *liteTest) dropTables(names ...string) {
  }
  
  func (t *liteTest) url(_ string) string {

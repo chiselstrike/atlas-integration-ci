@@ -1,4 +1,4 @@
-From e2284debb2845c4570d59f79e316155be7cbf45e Mon Sep 17 00:00:00 2001
+From f3e663a7c2c94b8912ff58be5e8e990dbea1bdab Mon Sep 17 00:00:00 2001
 From: Piotr Jastrzebski <piotr@chiselstrike.com>
 Date: Sat, 20 May 2023 21:32:22 +0200
 Subject: [PATCH] Add libsql driver to integration tests
@@ -10,7 +10,7 @@ Signed-off-by: Piotr Jastrzebski <piotr@chiselstrike.com>
  2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/internal/integration/go.mod b/internal/integration/go.mod
-index 36349e47..3823e5bc 100644
+index 9b4ef6fe..d5340f9f 100644
 --- a/internal/integration/go.mod
 +++ b/internal/integration/go.mod
 @@ -12,6 +12,7 @@ require (
@@ -21,16 +21,16 @@ index 36349e47..3823e5bc 100644
  	github.com/mattn/go-sqlite3 v1.14.16
  	github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e
  	github.com/rogpeppe/go-internal v1.9.0
-@@ -72,7 +73,6 @@ require (
+@@ -73,7 +74,6 @@ require (
  	github.com/klauspost/compress v1.15.15 // indirect
  	github.com/kr/pretty v0.3.0 // indirect
  	github.com/kr/text v0.2.0 // indirect
 -	github.com/libsql/libsql-client-go v0.0.0-20230602133133-5905f0c4f8a5 // indirect
  	github.com/libsql/sqlite-antlr4-parser v0.0.0-20230512205400-b2348f0d1196 // indirect
- 	github.com/manifoldco/promptui v0.9.0 // indirect
  	github.com/mattn/go-colorable v0.1.12 // indirect
+ 	github.com/mattn/go-isatty v0.0.18 // indirect
 diff --git a/internal/integration/sqlite_test.go b/internal/integration/sqlite_test.go
-index b222666b..ced1d976 100644
+index 108eefa6..c18517f3 100644
 --- a/internal/integration/sqlite_test.go
 +++ b/internal/integration/sqlite_test.go
 @@ -20,6 +20,7 @@ import (
